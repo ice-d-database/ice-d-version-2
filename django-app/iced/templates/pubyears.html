@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col">
+    <p>
+        <b>Browse Publications by Year:</b>
+        <blockquote>
+            {% for i in publications %}
+                <a class="ml-15" href="pubyear/{{i.year}}">
+                    {% if i.total == 1%}
+                        {{ i.year }} ( {{ i.total }} publication )
+                    {% else %}
+                        {{ i.year }} ( {{ i.total }} publications )
+                    {% endif %}
+                </a>
+                <br/>
+            {% endfor %}
+        </blockquote>
+    </p>
+</div>
+{% endblock %}

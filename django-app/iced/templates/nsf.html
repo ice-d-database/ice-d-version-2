@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    This page indexes samples associated with selected NSF-funded projects. These are a very small subset of the total number of NSF-funded research projects represented by data in the overall database. If you are PI of a project that you would like to be indexed here, contact <a href="mailto:balcs@bgc.org">Greg Balco</a>.<p></p>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>NSF ID</th>
+            <th class="text-center">View Samples</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for project in projects %}
+        <tr style="padding: .5em">
+            <td>
+                {% if project.NSF_title %}
+                {{ project.NSF_title }}
+                {% else %}
+                {{ project.project }}
+                {% endif %}
+            </td>
+            <td>
+                {% for funding_source in project.funding_sources.all %}
+                    <div>
+                        <a target="_blank" href="https://www.nsf.gov/awardsearch/showAward?AWD_ID={{ funding_source.funding_source_id }}">
+                            {{ funding_source.funding_source_id }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </td>
+            <td class="text-center">
+                <a href="{{ project.id }}">
+                    <img class="table-image-link" src="/static/img/link.svg">
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

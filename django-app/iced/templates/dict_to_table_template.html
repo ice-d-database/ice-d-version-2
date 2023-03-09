@@ -1,0 +1,21 @@
+{% load get_item %}
+{% block dict_to_table %}
+<table class=standard width=1000>
+    {% for entry in proper_names %}
+    {% with this_key as entry.field_name %}
+    <tr>
+        <td width=500>
+            {{ entry.description }}
+        </td>
+        <td>
+            {% if entry.format_string is not None and dict_data|get_item:entry.field_name is not None %}
+                {{ dict_data|get_item:entry.field_name }}{{ entry.format_string }}
+            {% else %}
+                {{ dict_data|get_item:entry.field_name }}
+            {% endif %}
+        </td>
+    </tr>
+    {% endwith %}
+    {% endfor %}
+</table>
+{% endblock dict_to_table %}

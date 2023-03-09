@@ -1,0 +1,19 @@
+<div>
+{% if photos_list is not None and photos_list|length > 0 %}
+    {% for entry in photos_list %}
+        <div class="row mt-1 row-align-center">
+            <div class="col w-70-p col-grow">
+                <img src="{{ entry.image_url_path.thumb_path }}{{ entry.display_photo_filename }}">
+            </div>
+            <div class="col col-no-grow w-30-p">
+                <p>{{ entry.caption }}</p>
+                <p>Photographer: {{ entry.photographer }}</p>
+                <p>
+                    <a href="{{ entry.image_url_path.path }}{{ entry.photo_filename }}">Link to full resolution photo (if exists)</a>
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No photos found.</p>
+{% endif %}

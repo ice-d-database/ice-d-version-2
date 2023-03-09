@@ -1,0 +1,38 @@
+<div>
+{% if publications|length > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author(s)</th>
+                <th>Publication</th>
+                <th>DOI</th>
+                <th class="text-center">View Samples</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for publication in publications %}
+                <tr>
+                    <td><strong>{{ publication.parsed_bibtex.title }}</strong></td>
+                    <td>{{ publication.parsed_bibtex.author }}</td>
+                    <td><em>{{ publication.parsed_bibtex.journal }}</em>, {{ publication.parsed_bibtex.year }}</td>
+                    <td>
+                    {% if publication.doi is not None %}
+                        <a href="https://dx.doi.org/{{ publication.doi }}">{{ publication.doi }}</a>
+                    {% else %}
+                        (no DOI)
+                    {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="/{{ app_name|lower }}/publication/{{ publication.id }}">
+                            <img class="table-image-link" src="/static/img/link.svg">
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <h3 class="mt-1">Sample(s) do not appear to be in any publications.</h3>
+{% endif %}
+</div>

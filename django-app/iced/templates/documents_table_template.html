@@ -1,0 +1,26 @@
+    {% if sample.documents %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Filename</th>
+                        <th class="text-center">Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for entry in sample.documents %}
+                            <tr>
+                                <td>{{ entry.document.description }}</td>
+                                <td>{{ entry.document.file_name }}</td>
+                                <td class="text-center">
+                                    <a href="{{ entry.document.url_path }}{{ entry.document.file_name }}">
+                                        <img class="table-image-link" src="/static/img/download.svg">
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+    {% else %}
+        <p>No associated documents.</p>
+    {% endif %}

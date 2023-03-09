@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+    {# Core Information #}
+    <h3 class="content-header">Core data</h3>
+    <div class="row row-align-center">
+        <div class="col col-grow">
+            <table class="auto-width vert-table compact-table">
+                <tr>
+                    <th>Site:</th>
+                    <td><a href="../../site/{{ core.site.short_name }}/">{{ core.site.short_name }}</a></td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td>{{ core.lat_DD|stringformat:"0.5f" }}, {{ core.lon_DD|stringformat:"0.5f" }}</td>
+                </tr>
+                <tr>
+                    <th>Elevation:</th>
+                    <td>{{ core.elv_m }} m</td>
+                </tr>
+                <tr>
+                    <th>What it is:</th>
+                    <td>{{ core.what }}</td>
+                </tr>
+                <tr>
+                    <th>Local ice surface elevation:</th>
+                    <td>{{ core.local_ice_surface_m }} m</td>
+                </tr>
+                <tr>
+                    <th>Ice cover thickness:</th>
+                    <td>{{ core.ice_cover_thickness_m }} m</td>
+                </tr>
+                <tr>
+                    <th>Ice cover mass thickness:</th>
+                    <td>{{ core.ice_cover_thickness_gcm2 }}</td>
+                </tr>
+                <tr>
+                    <th>Collected by:</th>
+                    <td>{{ core.collected_by }}</td>
+                </tr>
+                <tr>
+                    <th>Date collected:</th>
+                    <td>{{ core.date_collected }}</td>
+                </tr>
+                <tr>
+                    <th>Comments:</th>
+                    <td>{{ core.comments }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col col-no-grow">
+            {% if app_name|lower == 'antarctica' %}
+                <a href="https://ice-d.apps.pgc.umn.edu/antarctica?x={{ core.lon_DD|stringformat:"0.5f" }}&y={{ core.lat_DD|stringformat:"0.5f" }}&z=13">View site in the map interface</a>
+            {% endif %}
+            {% if app_name|lower == 'greenland' %}
+                <a href="https://ice-d.apps.pgc.umn.edu/greenland?x={{ core.lon_DD|stringformat:"0.5f" }}&y={{ core.lat_DD|stringformat:"0.5f" }}&z=12">View site in the map interface</a>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <h3 class="content-header">Associated publications</h3>
+        {% include 'publications_table_template.html' %}
+    </div>
+
+    <div>
+        <h3 class="content-header">Core samples</h3>
+        {% include 'coresamples_table_template.html' %}
+    </div>
+    {% if is_NofZ_plot %}
+        <div>
+            <h3 class="content-header">N(z)</h3>
+            {{  plot_script | safe }}
+            {{ plot_div | safe }}
+        </div>
+    {% endif %}
+    <div>
+        <h3 class="content-header">Depth/nuclide concentration data dumps</h3>
+        {% include 'coresample_table.html' %}
+    </div>
+{% endblock %}
+

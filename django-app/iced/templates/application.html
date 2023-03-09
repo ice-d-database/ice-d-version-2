@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{%  if interactive_map %}
+
+    {% block prepend_additional_scripts %}
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_key }}"></script>
+    {% endblock %}
+
+    {% block additional_styles %}
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+        <link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
+    {% endblock %}
+{% endif %}
+{% block content %}
+<div>
+    <div>
+        <div class="row row-align-center row-space-around">
+            <div class="col">
+                {%  if interactive_map %}
+                    <div id="map" class="application-map"></div>
+                {% else %}
+                    <img src={{map_image}}/>
+                {% endif %}
+            </div>
+            <div class="col">
+                <p>
+                    {% if browse_by_site_list|length > 1 %}
+                        <b>Browse sites by continent:</b>
+                        <blockquote>
+                            {% for i in browse_by_site_list %}
+                                <a class="ml-1" href={{i.url}}>
+                                    {{ i.name|title }}
+                                </a>
+                                <br/>
+                            {% endfor %}
+                        </blockquote>
+                    {% else %}
+                        <a href="sites">
+                            Browse by site
+                        </a>
+                    {% endif %}
+                </p>
+
+                {% if show_publications %}
+                    <p>
+                        <a href="publications">
+                            Browse by publication
+                        </a>
+                    </p>
+                {% endif %}
+                {% if show_pubyears %}
+                    <p>
+                        <a href="pubyears">
+                            Browse by publication year
+                        </a>
+                    </p>
+                {% endif %}
+                {% if show_all_cores %}
+                    <p>
+                        <a href="cores">
+                            Browse subsurface/depth profile data
+                        </a>
+                    </p>
+                {% endif %}
+               {% if app_name|lower == 'antarctica' %}
+                    <p>
+                        <a href="https://ice-d.apps.pgc.umn.edu/antarctica/">Map interface</a>
+                        (thanks <a href="http://pgc.umn.edu">PGC</a>)
+					</p>
+               {% endif %}
+			   {% if app_name|lower == 'greenland' %}
+                    <p>
+                        <a href="https://ice-d.apps.pgc.umn.edu/greenland/">Map interface</a>
+                        (thanks <a href="http://pgc.umn.edu">PGC</a>)
+					</p>
+               {% endif %}
+               {% if NSF_funding %}
+                    <p class="mt-1">
+                        <a href="nsf">
+                            Data indexed to selected NSF funding
+                        </a>
+                    </p>
+               {% endif %}
+                {% if calibration_data_sets %}
+                    <p class="mt-1">
+                        <a href="cal_data_set">
+                            Browse by calibration data set
+                        </a>
+                    </p>
+                {% endif %}
+               {% if app_name|lower == 'antarctica' %}
+                <p class="mt-1">
+                        <a href="https://cosmognosis.wordpress.com/2015/04/20/the-ice-d-database-project/" target="_blank">Some background information</a>
+                </p>
+               {% endif %}
+        </div>
+       {% if app_name|lower == 'alpine' %}
+            <p class="mt-1">
+                Thanks to <a href="http://jakob.heyman.info/index.html"> Jakob Heyman</a> for compiling most of these data so we could easily ingest them to get this project started.
+            </p>
+       {% endif %}
+</div>
+<script src="{% static 'scripts/map.js' %}"></script>
+{% endblock %}

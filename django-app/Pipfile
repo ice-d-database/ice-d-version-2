@@ -1,0 +1,37 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+mysqlclient = "==2.0.3"
+django-import-export = "==2.9.0"
+black = "==21.8b0"
+django-allauth = "==0.45.0"
+djangorestframework = "==3.12.4"
+django-filter = "==2.4.0"
+requests = "==2.26.0"
+xmltodict = "==0.12.0"
+python-dotenv = "==0.19.0"
+Django = "==4.1.5"
+Markdown = "==3.3.4"
+django-guardian = "*"
+dj-database-url = "*"
+types-requests = "*"
+bandit = "*"
+django-autoslug = "*"
+simplekml = "*"
+sqlparse = "*"
+django-csp = "*"
+djangorestframework-xml = "*"
+python-geohash = "*"
+isort = "*"
+django-crontab = "*"
+bibtexparser = "*"
+numpy = "*"
+bokeh = "==3.0.3"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

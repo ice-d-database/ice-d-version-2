@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load get_item %}
+{% block content %}
+    <table>
+        <thead>
+            <tr>
+                <th>Calibration Data Set</th>
+                <th>Nuclide</th>
+                <th>Description</th>
+                <th>Samples</th>
+                <th>KML</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cal_data_set in cal_data_sets %}
+                <tr>
+                    <td>{{ cal_data_set.name }}</td>
+                    <td>{{ cal_data_set.nuclide }}</td>
+                    <td>{{ cal_data_set.description }}</td>
+                    {% with cal_data_set.samples.all as samples %}
+                    <td><a href="{{ cal_data_set.id }}">{{ samples|length }}</a></td>
+                        <td><a href="/api/kml/samples/{% for sample in samples %}{{ sample.id }},{% endfor %}">KML</a></td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {{ counts }}
+
+{% endblock %}

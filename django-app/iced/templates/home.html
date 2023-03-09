@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div>
+    {% for application in applications %}
+        {%  if application.is_visible %}
+        <div class="row app-container">
+            <div class="col app-image-container">
+                <img class="gray-bg" src="{% static "" %}img/{{ application.image }}"/>
+            </div>
+            <div>
+                <h2>
+                    <a href="{{ application.name|lower }}">ICE-D: {{ application.name }}</a>
+                </h2>
+                <p>
+                    {{ application.description|safe }}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}

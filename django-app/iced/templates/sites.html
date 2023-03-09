@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="no-border">
+        <thead>
+            <tr>
+                <th>Region</th>
+                <th>Site</th>
+                <th>Sample Count</th>
+                <th>Short Name</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for region, sites in sites_by_region.items %}
+            <tr class="border-top">
+                <td class="sites-region-tbl-col">{{ region }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% for site in sites %}
+            <tr>
+            <td></td>
+            <td>{{ site.name }}</td>
+            <td>{{ site.samples_count }}</td>
+            <td><a href="/{{ app_name|lower }}/site/{{ site.short_name }}">{{ site.short_name }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}
+

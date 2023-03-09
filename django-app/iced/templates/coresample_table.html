@@ -1,0 +1,51 @@
+{% for k, v in depth_nuclide_data.items %}
+<h4 class="mt-1">{{ k }} data</h4>
+{% if v %}
+<table>
+    <thead>
+        <tr>
+            <th>Top Depth (cm)</th>
+            <th>Bottom Depth (cm)</th>
+            <th>Top Mass Depth (g/cm2)</th>
+            <th>Bottom Mass Depth (g/cm2)</th>
+            <th>{% if k == 'Be-10 (qtz)' %} N10
+                {% elif k == 'Ne-21 (qtz)' %} N21
+                {% elif k == 'Al-26 (qtz)' %} N26
+                {% endif %}
+            </th>
+                <th>{% if k == 'Be-10 (qtz)' %} delN10
+                {% elif k == 'Ne-21 (qtz)' %} delN21
+                {% elif k == 'Al-26 (qtz)' %} delN26
+                {% endif %}
+            </th>
+            <th>Sample Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for val in v %}
+            <tr>
+                <td>{{ val.top_depth_cm }}</td>
+                <td>{{ val.bot_depth_cm }}</td>
+                <td>{{ val.top_depth_gcm2|floatformat }}</td>
+                <td>{{ val.bot_depth_gcm2|floatformat }}</td>
+                <td>
+                    {% if k == 'Be-10 (qtz)' %} {{ val.n10_atoms_g|floatformat }}
+                    {% elif k == 'Ne-21 (qtz)' %} {{ val.n21_atoms_g|floatformat }}
+                    {% elif k == 'Al-26 (qtz)' %} {{ val.n26_atoms_g|floatformat }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if k == 'Be-10 (qtz)' %} {{ val.deln10_atoms_g|floatformat }}
+                    {% elif k == 'Ne-21 (qtz)' %} {{ val.deln21_atoms_g|floatformat }}
+                    {% elif k == 'Al-26 (qtz)' %} {{ val.deln26_atoms_g|floatformat }}
+                    {% endif %}
+                </td>
+                <td>{{ val.count }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    {% else %}
+    <p>No data available</p>
+    {% endif %}
+{% endfor %}

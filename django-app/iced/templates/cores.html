@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table>
+    <thead>
+        <tr>
+            <th>Site</th>
+            <th>Core, hole or pit name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for site_cores in cores_by_site %}
+        <tr class="border-top">
+            <td>
+                <a href="/{{ app_name }}/site/{{ site_cores.site.short_name }}">{{ site_cores.site.short_name }}</a>
+                ({{ site_cores.site.region.name }}, {{ site_cores.site.name }})
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% for core in site_cores.cores %}
+        <tr>
+            <td></td>
+            <td>
+                <a href="/{{ app_name }}/core/{{ core.name }}">{{ core.name }}</a>
+            </td>
+            <td>{{ core.description }}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

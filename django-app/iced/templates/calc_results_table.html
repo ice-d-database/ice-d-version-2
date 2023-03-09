@@ -1,0 +1,111 @@
+{% block xml_table %}
+    {% if calc_results %}
+        <div class="row row-space-around">
+        <table class="col col-grow max-w-50-p">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan=5>
+                        St
+                    </th>
+                </tr>
+            </thead>
+            <thead>
+                <tr>
+                    <td>
+                        Sample name
+                    </td>
+                    <td>
+                        Nuclide
+                    </td>
+                    <td>
+                        Age (yr)
+                    </td>
+                    <td>
+                        Interr (yr)
+                    </td>
+                    <td>
+                        Exterr (yr)
+
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sample_name, values in calc_results.items %}
+                    {% for nuclide, values in values.St.items %}
+                        {% for nested_val in values %}
+                            <tr>
+                                <td>{{ sample_name }}</td>
+                                <td>{{ nuclide }}</td>
+                                <td>{{ nested_val.0 }}</td>
+                                <td>{{ nested_val.1 }}</td>
+                                <td>{{ nested_val.2 }}</td>
+                            </tr>
+                       {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table >
+        <table class="col col-grow max-w-50-p">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan=5>
+                        LSDn
+                    </th>
+                </tr>
+            </thead>
+            <thead>
+                <tr>
+                    <td>
+                        Sample name
+                    </td>
+                    <td>
+                        Nuclide
+                    </td>
+                    <td>
+                        Age (yr)
+                    </td>
+                    <td>
+                        Interr (yr)
+                    </td>
+                    <td>
+                        Exterr (yr)
+
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sample_name, values in calc_results.items %}
+                    {% for nuclide, values in values.LSD.items %}
+                        {% for nested_val in values %}
+                            <tr>
+                                <td>{{ sample_name }}</td>
+                                <td>{{ nuclide }}</td>
+                                <td>{{ nested_val.0 }}</td>
+                                <td>{{ nested_val.1 }}</td>
+                                <td>{{ nested_val.2 }}</td>
+                            </tr>
+                       {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div class="row row-space-around mt-1">
+            {% for src in plot_results %}
+                <div class="col m-1">
+                    <div class="calc-image-links">
+                        <a href="{{ src }}.ps" target="_blank">Postscript</a> -- <a href="{{ src }}.gmt" target="_blank">GMT</a>
+                    </div>
+                    <img src="{{ src }}.png">
+                </div>
+            {% endfor %}
+        </div>
+        {% if v3_diagnostics %}
+        <div class="mt-1">
+            <p>
+                <strong>Diagnostics: </strong> {{ v3_diagnostics }}
+            </p>
+        </div>
+        {% endif %}
+    {% endif %}
+{% endblock xml_table %}

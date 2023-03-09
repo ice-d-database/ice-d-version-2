@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row row-align-center">
+    {% if not no_samples or not no_cores %}
+    <div class="col col-grow">
+    {% if app_name|lower == 'antarctica' %}
+        <a href="https://ice-d.apps.pgc.umn.edu/antarctica?x={{ avg_lon|stringformat:"0.5f" }}&y={{ avg_lat|stringformat:"0.5f" }}&z=13">View site in the map interface</a>
+    {% else %}
+        {% if app_name|lower == 'greenland' %}
+             <a href="https://ice-d.apps.pgc.umn.edu/greenland?x={{ avg_lon|stringformat:"0.5f" }}&y={{ avg_lat|stringformat:"0.5f" }}&z=12">View site in the map interface</a>
+        {% else %}
+             <a href="../../sitemap/{{ site.short_name }}/{{ avg_lat|stringformat:"0.5f" }}/{{ avg_lon|stringformat:"0.5f" }}/10">View site in the map interface</a>
+        {% endif %}
+    {% endif %}
+    </div>
+</div>
+<div>
+{% if publications|length %}
+    <div>
+        <h3 class="content-header">Associated publications</h3>
+        {% include 'publications_table_template.html' %}
+    </div>
+{% endif %}
+{% if calibration_data_sets %}
+    <div>
+        <h3 class="content-header">Independent age control for this site (years before 1950)</h3>
+        <p>Exact age: {{ site.site_truet }} +/- {{ site.site_del_truet }}</p>
+        <p>Minimum age: {{ site.site_min_truet }} +/- {{ site.site_del_min_truet }}</p>
+        <p>Maximum age: {{ site.site_max_truet }} +/- {{ site.site_del_max_truet }}</p>
+        <p>Climatological annually averaged snow water equivalent (cm): {{ site.annavg_SWE_cm }}</p>
+        <p>Typical observed erosional relief on rock surfaces (cm): {{ site.erosional_relief_cm }}</p>
+    </div>
+{% endif %}
+
+    <div>
+        <h3 class="content-header">Samples at this site</h3>
+        {% include 'nuclide_table_template.html' %}
+    </div>
+    {%  if not no_cores %}
+    <div>
+        <h3 class="content-header">Cores/subsurface data at this site</h3>
+        {% for core in cores %}
+            <p><a href="../../core/{{ core.name }}">{{ core.name }}</a> ( {{ core.description }} )</a></p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div>
+        <h3 class="content-header">Online exposure age calculator v3 input</h3>
+        {%  if calibration_data_sets %}
+            <p>This can be entered in the <a href=http://hess.ess.washington.edu/math/v3/v3_cal_in.html> version 3 production rate calibration input page. </a> </p>
+        {%  else %}
+            <p>This can be entered in the <a href=http://hess.ess.washington.edu/math/v3/v3_age_in.html> version 3 exposure age calculator</a> to compute exposure ages.</p>
+        {% endif %}
+        <!-- begin v3 --><pre>{{ v3_str }}</pre><!-- end v3 -->
+    </div>
+{% if cl36_str %}
+    <div>
+    <h3 class="content-header">Online Cl-36 exposure age calculator (experimental)</h3>
+        <p>This can be entered in the <a href="http://stoneage.ice-d.org/math/Cl36/v3/v3_Cl36_age_in.html"> prototype v3 Cl-36 exposure age calculator</a> to compute exposure ages.{% if calibration_data_sets %} (the Cl-36 calculator doesn't do production rate calibration yet){% endif %}</p>
+        <pre>{{ cl36_str }}</pre>
+    </div>
+{% endif %}
+
+        <div>
+        <h3 class="content-header">Online exposure age calculator v3 results {% if calibration_data_sets %} (default production rate calibration){% endif %}</h3>
+        {% if v3_age_results|length > 0 %}
+            {% with calc_results=v3_age_results plot_results=v3_plots%}
+                {% include 'calc_results_table.html' %}
+            {% endwith %}
+        {% else %}
+            <b>No exposure age calculator v3 results</b>
+        {% endif %}
+
+        {% if cl36_str|length > 0 %}
+            <h3 class="content-header">Chlorine-36 results from the prototype v3 online exposure age calculator {% if calibration_data_sets %} (default production rate calibration){% endif %}</h3>
+            <strong>This is the first try. Expect errors and inaccuracies.</strong>
+            {% with calc_results=cl36_age_results plot_results=cl36_plots %}
+                {% include 'calc_results_table.html' %}
+            {% endwith %}
+        {% endif %}
+
+        {% if is_summary_plot %}
+            <h3 class="content-header">{{ summary_plot_text }} {% if calibration_data_sets %} (default production rate calibration){% endif %}</h3>
+            {{  plot_script | safe }}
+            {{ plot_div | safe }}
+            {% if not calibration_data_sets %}
+        {% endif %}
+
+    </div>
+{% endif %}
+{% else %}
+    <h2>No samples for this site.</h2>
+{% endif %}
+
+</div>
+
+{% endblock %}

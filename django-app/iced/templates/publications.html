@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load get_item %}
+{% block content %}
+    <table class="no-border">
+        <thead>
+            <tr>
+                <th>Publication ID</th>
+                <th>Samples</th>
+                <th class="w-70-p">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for publication in publications%}
+            <tr class="border-top">
+                <td>{{ publication.id }}</td>
+                {% with publication.id|stringformat:"i" as pub_id %}
+                <td>
+                    <a href="/{{ app_name|lower }}/publication/{{ publication.id }}">
+                    {{ counts|get_dict_item:pub_id }} Samples
+                    </a>
+                </td>
+                {% endwith %}
+                <td>
+                    <p>
+                        {{ publication.parsed_bibtex.author }}
+                    </p>
+                    <p>
+                        <strong>{{ publication.parsed_bibtex.title }}</strong>
+                    </p>
+                    <p>
+                        <em>{{ publication.parsed_bibtex.journal }}</em>, {{ publication.parsed_bibtex.year }}
+                    </p>
+                    <p>
+                    {% if publication.doi is not None %}
+                        DOI: <a href="https://dx.doi.org/{{ publication.doi }}">{{ publication.doi }}</a>
+                    {% else %}
+                        (no DOI)
+                    {% endif %}
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}
+

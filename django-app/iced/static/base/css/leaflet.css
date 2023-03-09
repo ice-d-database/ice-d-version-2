@@ -1,0 +1,201 @@
+
+.leaflet-container .leaflet-control-mouseposition {
+  background-color: rgba(222, 222, 222, 1);
+  box-shadow: 0 0 5px #bbb;
+  padding: 0 5px;
+  margin:0;
+  color: #333;
+  font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+
+.leaflet-control-defaultextent {
+
+}
+
+.leaflet-control-defaultextent-toggle {
+  text-indent: -9999px;
+  white-space: nowrap;
+  /* Change by Ryan Harvey: modified image path to fit deployment pattern
+  background-image: url('leaflet.defaultextent.png');
+  */
+  background-image: url('/static/img/leaflet.defaultextent.png');
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+/* CSS for high-resolution devices */
+@media only screen and (-Webkit-min-device-pixel-ratio: 1.5),
+only screen and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5) {
+    .leaflet-control-defaultextent-toggle {
+        /* Change by Ryan Harvey: modified image path to fit deployment pattern
+        background-image: url('leaflet.defaultextent@2X.png');
+        */
+        background-image: url('/static/img/leaflet.defaultextent.png');
+        background-size: 26px 26px;
+        background-repeat: no-repeat;
+    }
+}
+
+
+/* LEAFLET DISTANCE MEASURING TOOL */
+.leaflet-control {
+    cursor: pointer;
+}
+
+a.polyline-measure-controlOnBgColor, a.polyline-measure-controlOnBgColor:hover {
+    background-color: #8f8;
+}
+
+.polyline-measure-unicode-icon {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+a.polyline-measure-clearControl:active {
+    background-color: #f88;
+}
+
+.polyline-measure-tooltip {
+    font: 10px Arial, Helvetica, sans-serif;
+    line-height: 10px;
+    background-color: rgba(255, 255, 170, 0.7);
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px #888;
+    margin: 0;
+    padding: 2px;
+    width: auto !important;
+    height: auto !important;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.polyline-measure-tooltip-end {
+    background-color: rgba(255, 255, 40, 0.7);
+}
+
+.polyline-measure-tooltip-total {
+    color: #006;
+    font-weight: bold;
+}
+
+.polyline-measure-tooltip-difference {
+    color: #060;
+    font-style: italic;
+}
+
+.polyline-measure-popupTooltip {
+    font: 11px Arial, Helvetica, sans-serif;
+    line-height: 11px;
+}
+
+
+/*LEAFLET FULLSCREEN BUTTON */
+.leaflet-control-fullscreen a {
+  background:#fff url('/static/img/fullscreen.png') no-repeat 0 0;
+  background-size:25px 25px;
+  }
+  .leaflet-touch .leaflet-control-fullscreen a {
+    background-position: 2px 2px;
+    }
+  .leaflet-fullscreen-on .leaflet-control-fullscreen a {
+    background-position:0 -25px;
+    }
+  .leaflet-touch.leaflet-fullscreen-on .leaflet-control-fullscreen a {
+    background-position: 2px -25px;
+    }
+
+/* Do not combine these two rules; IE will break. */
+.leaflet-container:-webkit-full-screen {
+  width:100%!important;
+  height:100%!important;
+  }
+.leaflet-container.leaflet-fullscreen-on {
+  width:100%!important;
+  height:100%!important;
+  }
+
+.leaflet-pseudo-fullscreen {
+  position:fixed!important;
+  width:100%!important;
+  height:100%!important;
+  top:0!important;
+  left:0!important;
+  z-index:99999;
+  }
+
+@media
+  (-webkit-min-device-pixel-ratio:2),
+  (min-resolution:192dpi) {
+    .leaflet-control-fullscreen a {
+      background-image:url('/static/img/fullscreen.png');
+    }
+  }
+
+
+/* MARKER CLUSTER */
+.marker-cluster-small {
+	background-color: rgba(181, 226, 140, 0.6);
+	}
+.marker-cluster-small div {
+	background-color: rgba(110, 204, 57, 0.6);
+	}
+
+.marker-cluster-medium {
+	background-color: rgba(241, 211, 87, 0.6);
+	}
+.marker-cluster-medium div {
+	background-color: rgba(240, 194, 12, 0.6);
+	}
+
+.marker-cluster-large {
+	background-color: rgba(253, 156, 115, 0.6);
+	}
+.marker-cluster-large div {
+	background-color: rgba(241, 128, 23, 0.6);
+	}
+
+.digits-1 { font-size: 10px; }
+.digits-2 { font-size: 12px; }
+.digits-3 { font-size: 14px; }
+.digits-4 { font-size: 14px; }
+
+.cn-cluster{
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+.cn-cluster, .cn-cluster-inner{
+    border-radius: 50%;
+    color: white;
+    font-weight:bold;
+}
+.cn-cluster-inner{
+    width: 1.8em;
+    height: 1.8em;
+    padding-top: 0.2em;
+    text-align: center;
+}
+
+/*.digits {*/
+/*	height: 2em;*/
+/*    width: 2em;*/
+/*	line-height: 2.1em;*/
+/*}*/
+
+/*.digits>div{*/
+/*    height: 1.7em;*/
+/*    width: 1.7em;*/
+/*    margin-top: -.1em;*/
+/*}*/
+
+/*.digits:before {*/
+/*    border: 1px solid white;*/
+/*}*/

@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div>
+        <h3 class="content-header">Sample</h3>
+        {% include 'nuclide_table_template.html' %}
+    </div>
+{% if sample.USPRR_DB_id %}
+    <div>
+        <h3 class="content-header">U.S. Polar Rock Repository</h3>
+        <p>
+            This sample is housed at the U.S. Polar Rock Repository. <a href="http://research.bpcrc.osu.edu/rr/collection/object/{{ sample.USPRR_DB_id }}" target="_blank">Link</a>
+        </p>
+    </div>
+{% endif %}
+{% if 0 %}
+    <!-- this block was originally in sample pages for cal application. Really not needed. -->
+    <div>
+        <h3 class="content-header">Independent age control for this site (years before 1950)</h3>
+        <p>Exact age: {{ site.site_truet }} +/- {{ site.site_del_truet }}</p>
+        <p>Minimum age: {{ site.site_min_truet }} +/- {{ site.site_del_min_truet }}</p>
+        <p>Maximum age: {{ site.site_max_truet }} +/- {{ site.site_del_max_truet }}</p>
+        <p>Climatological annually averaged snow water equivalent (cm): {{ site.annavg_SWE_cm }}</p>
+        <p>Typical observed erosional relief on rock surfaces (cm): {{ site.erosional_relief_cm }}</p>
+    </div>
+{% endif %}
+<div>
+    <h3 class="content-header">Online exposure age calculator v3 input</h3>
+    <p>This can be entered in the <a href=http://hess.ess.washington.edu/math/v3/v3_age_in.html> version 3 exposure age calculator</a> to compute exposure ages.</p>
+    <!-- begin v3 --><pre>{{ v3_str }}</pre><!-- end v3 -->
+</div>
+{% if cl36_str %}
+    <div>
+    <h3 class="content-header">Online exposure age calculator Cl-36 input (experimental)</h3>
+        <p>This can be entered in the <a href="http://stoneage.ice-d.org/math/Cl36/v3/v3_Cl36_age_in.html"> prototype v3 Cl-36 exposure age calculator</a> to compute exposure ages.</p>
+        <pre>{{ cl36_str }}</pre>
+    </div>
+{% endif %}
+{% if not calibration_data_sets %}
+    <div>
+        <h3 class="content-header">Online exposure age calculator v3 results</h3>
+        {% if v3_age_results|length > 0 %}
+            {% with calc_results=v3_age_results plot_results=v3_plots%}
+                {% include 'calc_results_table.html' %}
+            {% endwith %}
+        {% else %}
+            <b>No exposure age calculator v3 results</b>
+        {% endif %}
+
+        {% if cl36_age_results|length > 0 %}
+            <h3 class="content-header">Chlorine-36 results from the prototype v3 online exposure age calculator (experimental)</h3>
+            <strong>This is the first try. Expect errors and inaccuracies.</strong>
+            {% with calc_results=cl36_age_results plot_results=cl36_plots %}
+                {% include 'calc_results_table.html' %}
+            {% endwith %}
+        {% endif %}
+    </div>
+{% endif %}
+    <div>
+        <h3 class="content-header">Associated publications</h3>
+        {% include 'publications_table_template.html' %}
+    </div>
+    <div>
+    <h3 class="content-header">Associated documents</h3>
+        {% include 'documents_table_template.html' %}
+    </div>
+    <div>
+    <h3 class="content-header">Field photographs</h3>
+        {% with photos_list=sample.field_photos %}
+            {% include 'photos_table_template.html' %}
+        {% endwith %}
+    </div>
+    <div>
+    <h3 class="content-header">Lab photographs</h3>
+        {% with photos_list=sample.lab_photos %}
+            {% include 'photos_table_template.html' %}
+        {% endwith %}
+    </div>
+    <div>
+        <h3 class="content-header">Complete dump of sample & measurement data</h3>
+        {% if sampleTables|length > 0 %}
+        <strong>Sample-related information</strong>
+        <table>
+            <tbody>
+            {% for obj in sampleTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if albeTables|length > 0 %}
+        <hr>
+        <strong>Be-10/Al-26-in-quartz data:</strong>
+        <table>
+            <tbody>
+            {% for obj in albeTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if c14qTables|length > 0 %}
+        <hr>
+        <strong>C-14-in-quartz data:</strong>
+        <table>
+            <tbody>
+            {% for obj in c14qTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if he3qTables|length > 0 %}
+        <hr>
+        <strong>He-3-in-quartz data:</strong>
+        <table>
+            <tbody>
+            {% for obj in he3qTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if he3pxolTables|length > 0 %}
+        <hr>
+        <strong>He-3-in-px/ol data:</strong>
+        <table>
+            <tbody>
+            {% for obj in he3pxolTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if ne21qTables|length > 0 %}
+        <hr>
+        <strong>Ne-21-in-quartz data:</strong>
+        <table>
+            <tbody>
+            {% for obj in ne21qTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if UThquartzTables|length > 0 %}
+        <hr>
+        <strong>U/Th-in-quartz data:</strong>
+        <table>
+            <tbody>
+            {% for obj in UThquartzTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if cl36Tables|length > 0 %}
+        <hr>
+        <strong>Cl-36 data:</strong>
+        <table>
+            <tbody>
+            {% for obj in cl36Tables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if majorTables|length > 0 %}
+        <hr>
+        <strong>Major element concentration data:</strong>
+        <table>
+            <tbody>
+            {% for obj in majorTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if traceTables|length > 0 %}
+        <hr>
+        <strong>Trace element concentration data:</strong>
+        <table>
+            <tbody>
+            {% for obj in traceTables %}
+                <tr>
+                    {% with title=val.0 format=val.1 %}
+                        <td class="w-70-p">{{ obj.key }}</td>
+                        <td class="w-70-p">{{ obj.value }}</td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

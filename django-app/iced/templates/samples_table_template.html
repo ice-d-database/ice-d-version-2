@@ -1,0 +1,81 @@
+{% block samples_table %}
+{% if samples|length > 0 %}
+<h3 class="mt-1">Sample Data:</h3>
+<table>
+<tr>
+    <th>Sample name</th>
+    <th>Latitude<br>(DD)</th>
+    <th>Longitude<br>(DD)</th>
+    <th>Elevation<br>(m)</th>
+    <th>Lithology</th>
+    <th>What is it?</th>
+    <th>Site</th>
+    <th class="colored-cell small-td text-center"><sup>10</sup>Be<br>(qtz)</th>
+    <th class="colored-cell small-td text-center"><sup>26</sup>Al<br>(qtz)</th>
+    <th class="colored-cell small-td text-center"><sup>14</sup>C<br>(qtz)</th>
+    <th class="colored-cell small-td text-center"><sup>3</sup>He<br>(qtz)</th>
+    <th class="colored-cell small-td text-center"><sup>3</sup>He<br>(px/ol)</th>
+    <th class="colored-cell small-td text-center"><sup>21</sup>Ne<br>(qtz)</th>
+    <th class="colored-cell small-td text-center"><sup>36</sup>Cl<br>(?)</th>
+</tr>
+
+{% for sample_id, sample in samples.items %}
+    <tr class="no-border-bottom">
+        {% with sample.sample_data as sample_data %}
+        <td><a href="/app/{{ app_name }}/coresample/{{ sample_data.name }}">{{ sample_data.name }}</a></td>
+        <td>{{ sample_data.latitude|stringformat:"0.5f"|default:"" }}</td>
+        <td>{{ sample_data.longitude|stringformat:"0.5f"|default:"" }}</td>
+        <td>{{ sample_data.elevation|stringformat:"0.0f"|default:"" }}</td>
+        <td>{{ sample_data.lithology|default:"" }}</td>
+        <td>{{ sample_data.what|default:"" }}</td>
+        {% if sample_data.site_short_name is not None %}
+        <td align=center><a href={{ app_name }}/site/{{ sample_data.site_short_name }}> {{ sample_data.site_short_name }} </a></td>
+        {% else %}
+        <td></td>
+        {% endif %}
+        {% with sample.Be10_Al26_quartz as nuclides %}
+        <td class="{% if nuclides.N10_atoms_g > 0 %}green-bg{% else %}light-gray-bg{% endif %}">
+            {{ nuclides.N10_atoms_g|default:"" }}
+        </td>
+        <td class="{% if nuclides.N26_atoms_g > 0 %}green-bg{% else %}light-gray-bg{% endif %}">
+            {{ nuclides.N26_atoms_g|default:"" }}
+        </td>
+        {% endwith %}
+        {% with sample.C14_quartz as nuclides %}
+        <td class="{% if nuclides.N10_atoms_g > 0 %}green-bg{% else %}light-gray-bg{% endif %}">
+            {{ nuclides.N10_atoms_g|default:"" }}
+        </td>
+        {% endwith %}
+        {% with sample.He3_quartz as nuclides %}
+        <td class="{% if nuclides.N3c_atoms_g > 0 %}green-bg{% else %}light-gray-bg{% endif %}">
+            {{ nuclides.N3c_atoms_g|default:"" }}
+        </td>
+        {% endwith %}
+        {% with sample.He3_pxol as nuclides %}
+        <td class="{% if nuclides.N3c_atoms_g > 0 %}green-bg{% else %}light-gray-bg{% endif %}">
+            {{ nuclides.N3c_atoms_g|default:"" }}
+        </td>
+        {% endwith %}
+        {% with sample.Ne21_quartz as nuclides %}
+        <td class="{% if nuclides.N21xs_atoms_g > 0 %}green-bg{% else %}light-gray-bg{% endif %}">
+            {{ nuclides.N21xs_atoms_g|default:"" }}
+        </td>
+        {% endwith %}
+        {% with sample.Cl36 as nuclides %}
+        <td class="{% if nuclides.total > 0 %}green-bg{% else %}light-gray-bg{% endif %}">
+            {{ nuclides.total|default:"" }}
+        </td>
+        {% endwith %}
+    </tr>
+    {% if sample_data.comments and sample_data.comments|length > 0 %}
+    <tr class="no-border-top">
+        <td colspan=14><blockquote><strong>Comments</strong>: {{ sample_data.comments }}</blockquote></td></tr>
+    {% endif %}
+    {% endwith %}
+{% endfor %}
+</table>
+{% else %}
+    <h3 class="mt-1">No samples found.</h3>
+{% endif %}
+{% endblock samples_table %}
+    

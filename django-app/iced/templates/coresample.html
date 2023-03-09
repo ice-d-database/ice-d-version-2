@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load proper_name_formatter %}
+{% load get_item %}
+{% load replace_str %}
+{% block content %}
+<div>
+<h3>This sample belongs to core <a href="/{{ app_name }}/core/{{ coresample.core.name }}/">{{ coresample.core.name }}</a></h3>
+</div>
+<div>
+    <h3 class="content-header">Associated documents</h3>
+        {% include 'documents_table_template.html' %}
+    </div>
+       <div>
+    <h3 class="content-header">Lab photographs</h3>
+        {% with photos_list=coresample.get_core_photos %}
+            {% include 'photos_table_template.html' %}
+        {% endwith %}
+    </div>
+<div>
+    <h3 class="content-header">Complete dump of sample & measurement data</h3>
+    <strong>Sample related information</strong>
+    <table>
+        <tbody>
+        {% for key, val in field_proper_names.base_coresample.items %}
+            <tr>
+                {% with title=val.0 format=val.1 %}
+                    <td class="w-70-p">{{ title }}</td>
+                    <td>{{ coresample|get_item:key|pn_format:format }}</td>
+                {% endwith %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% for ntable in ntables %}
+    {% with fpn=field_proper_names|get_dict_item:ntable.nuclide %}
+    <div class="mt-2">
+        <strong>{{ ntable.nuclide|title|replace_snake }} Data:</strong>
+        <table>
+            <tbody>
+            {% for key, val in fpn.items %}
+                {% with title=val.0 format=val.1 %}
+                    <tr>
+                        <td class="w-70-p">{{ title }}</td>
+                        <td>{{ ntable.properties|get_item:key|pn_format:format }}</td>
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endwith %}
+{% endfor %}
+    </div>
+</div>
+
+{% endblock %}

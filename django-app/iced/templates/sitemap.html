@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block prepend_additional_scripts %}
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_key }}"></script>
+{% endblock %}
+
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div id="map" class="application-map"></div>
+
+<script src="{% static 'scripts/map.js' %}"></script>
+{% endblock %}
