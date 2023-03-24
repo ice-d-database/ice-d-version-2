@@ -138,8 +138,7 @@ class SamplePublicationsMatchAdmin(ImportExportModelAdmin):
                 )
             )
             fullList = groupAppList + userAppList
-            # queryset = Site.objects.filter(application_id__in=fullList).order_by("id")
-            queryset = Site.objects.filter(applications__id__in=fullList).order_by("id")
+            queryset = SamplePublicationsMatch.objects.filter(core_sample__core_id__site_id__applications__id__in=fullList).order_by("id")
 
         return queryset
 
