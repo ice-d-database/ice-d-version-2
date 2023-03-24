@@ -118,3 +118,4 @@ https://www.loom.com/share/6753cf63fa7a4b2fa04329487485661e
    - If existing tasks exist, run `pipenv run python iced/manage.py crontab remove` to remove 
    - And this will add them: `pipenv run python iced/manage.py crontab add`
    - You can check your work with `crontab -l` to view the current crontab schedule.
+   
