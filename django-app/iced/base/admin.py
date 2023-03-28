@@ -138,8 +138,7 @@ class SamplePublicationsMatchAdmin(ImportExportModelAdmin):
                 )
             )
             fullList = groupAppList + userAppList
-            # queryset = Site.objects.filter(application_id__in=fullList).order_by("id")
-            queryset = Site.objects.filter(applications__id__in=fullList).order_by("id")
+            queryset = SamplePublicationsMatch.objects.filter(core_sample__core_id__site_id__applications__id__in=fullList).order_by("id")
 
         return queryset
 
@@ -282,6 +281,37 @@ class PublicationAdmin(ImportExportModelAdmin):
 class CoreSampleNuclideMatchAdmin(ImportExportModelAdmin):
     resource_class = CoresampleNuclideMatchResource
 
+
+class ImageFileResource(resources.ModelResource):
+    class Meta:
+        model = ImageFile
+        skip_unchanged = True
+
+
+class ImageFilesCoresResource(resources.ModelResource):
+    class Meta:
+        model = ImageFilesCores
+        skip_unchanged = True
+
+
+class ImageUrlPathResource(resources.ModelResource):
+    class Meta:
+        model = ImageUrlPath
+        skip_unchanged = True
+
+
+class ImageFileAdmin(ImportExportModelAdmin):
+    resource_class = ImageFileResource
+
+
+class ImageFilesCoresAdmin(ImportExportModelAdmin):
+    resource_class = ImageFilesCoresResource
+
+
+class ImageUrlPathAdmin(ImportExportModelAdmin):
+    resource_class = ImageUrlPathResource
+
+
 # These are the nuclide match tables
 class Be10Al26QuartzResource(resources.ModelResource):
     class Meta:
@@ -374,9 +404,9 @@ admin.site.register(CalibrationDataSample)
 admin.site.register(Continent)
 admin.site.register(Document)
 admin.site.register(FundingSource)
-admin.site.register(ImageFile)
-admin.site.register(ImageFilesCores)
-admin.site.register(ImageUrlPath)
+admin.site.register(ImageFile, ImageFileAdmin)
+admin.site.register(ImageFilesCores, ImageFilesCoresAdmin)
+admin.site.register(ImageUrlPath, ImageUrlPathAdmin)
 admin.site.register(Region)
 admin.site.register(SampleDocumentMatch)
 admin.site.register(SampleUserData)
