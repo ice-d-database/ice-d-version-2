@@ -50,7 +50,7 @@ context_base = {
 def _call_calculation(calculation_name: str, input: str):
     calculation = Calculation.get_calculation_by_name(calculation_name)
     variables = json.loads(calculation.variable_json)
-    variables["summary"] = "yes"
+    variables["summary"] = "no"
     variables["text_block"] = input
     run_calculation_endpoint = (
         f"{settings.BASE_URL}/api/calculations/run/" + calculation_name
@@ -744,7 +744,8 @@ def site(request, application_name, site_name):
             cl36_str, "Cl36_input_v3")
 
     else:
-        publications = []
+        # publications = []
+        publications = set() # this has to be a set so it can be unioned later
         n_tables = {}
         cl36_str = ""
         v3_str = ""
