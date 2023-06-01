@@ -13,10 +13,10 @@ calibration_text as (
                                          st.site_truet, st.site_del_truet
                           )
                       else concat_ws(" ",
-                          coalesce(st.site_max_truet, 0),
-                         coalesce(st.site_del_max_truet, 0),
-                         coalesce(st.site_min_truet, 0),
-                         coalesce(st.site_del_min_truet, 0)
+                          coalesce(st.site_min_truet, 0),
+                         coalesce(st.site_del_min_truet, 0),
+                         coalesce(st.site_max_truet, 0),
+                         coalesce(st.site_del_max_truet, 0)
                       )
                 end,
                 ";"

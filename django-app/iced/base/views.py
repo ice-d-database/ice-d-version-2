@@ -400,11 +400,7 @@ def pubYears(request, application_name):
         return error_404_page(
             f"Can't find an application id: {application_name}", request
         )
-      
-    # This isn't right -- shouldn't make use of application_id in publications, because that doesn't support
-    # multiple applications for each publication. Needs to use query through spm table. However, doesn't have to
-    # figure the publications count, only needs to know what years are present.
-    # Actually I think this is probably two queries -- via samples and via cores/coresamples.
+
 
     publications = Publication.get_by_application(application)
     publication_ids = [p.publication.id for p in publications]
@@ -437,9 +433,6 @@ def pubYear(request, application_name, year):
             f"Can't find an application id: {application_name}", request
         )
 
-    # This isn't right -- as above, shouldn't make use of base_publication.application_id. Needs to get
-    # application/pub relation by going through samples/sample-pub match and also coresamples/core-pub match.
-    # I guess this is a raw SQL method in Publication.
 
     publications_spm = Publication.get_by_application(application)
     publication_ids = [p.publication.id for p in publications_spm]
@@ -455,8 +448,6 @@ def pubYear(request, application_name, year):
             counts[pub_id_str] = 0
         counts[pub_id_str] = counts[pub_id_str] + 1
 
-    # Todo: There is a bug in the data loading where it's missing some associated samples with publications
-    # we need to pin down. Otherwise this mostly works.
     context = {
         "page_title": f"Publications dated {year}",
         "publications": publications,

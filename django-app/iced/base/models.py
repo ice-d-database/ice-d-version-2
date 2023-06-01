@@ -192,7 +192,7 @@ class Site(models.Model):
     implied_thickening_m = models.FloatField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
     continent = models.ForeignKey(
-        Continent, on_delete=models.SET_NULL, blank=True, null=True
+        Continent, default=10, on_delete=models.PROTECT
     )
     range = models.TextField(null=True, blank=True)
     glacier = models.TextField(null=True, blank=True)
@@ -500,7 +500,6 @@ class Document(models.Model):
     file_name = models.TextField(null=True, blank=True)
     url_path = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    publications = models.ManyToManyField("Publication")
 
     def __str__(self):
         return f"{self.id} - ({self.file_name})"
