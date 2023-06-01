@@ -105,7 +105,7 @@ CSP_SCRIPT_SRC = (
 )
 
 # images from our domain and other domains
-CSP_IMG_SRC = ("'self'", "data:", "*.gstatic.com", "*.googleapis.com", "*.ice-d.org")
+CSP_IMG_SRC = ("'self'", "data:", "*.gstatic.com", "*.googleapis.com", "*.ice-d.org", "imgur.com", "*.imgur.com")
 
 
 # loading manifest, workers, frames, etc
