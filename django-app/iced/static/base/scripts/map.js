@@ -36,7 +36,8 @@ $.getJSON('/api/leaflet_map/' + window.iced.app_name).then(function (mapPayload)
         fullscreenControl: true,
         defaultExtentControl: true,
         attributionControl: false,
-        zoom: 0
+        zoom: 0,
+        maxZoom: 22
     }).setView([46.252389, 6.941528],16);
 
     // GB changed the above so that the home button will take you to the Pierre des Marmettes, the largest erratic in Switzerland, originally recognized as a glacial erratic by Jean de Charpentier in 1840. Previously the home button went to a random location in Washington. Perhaps it should be a global view instead?

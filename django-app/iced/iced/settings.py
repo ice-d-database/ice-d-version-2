@@ -88,7 +88,7 @@ MIDDLEWARE = [
 
 # CSP Settings
 # default source as self
-CSP_DEFAULT_SRC = ("'self'", "*.googleapis.com")
+CSP_DEFAULT_SRC = ("'self'", "*.googleapis.com", "unpkg.com")
 
 # style from our domain and bootstrapcdn
 CSP_STYLE_SRC = ("'self'", "unpkg.com", "'unsafe-inline'", "*.googleapis.com")
@@ -110,8 +110,8 @@ CSP_IMG_SRC = ("'self'", "data:", "*.gstatic.com", "*.googleapis.com", "*.ice-d.
 
 # loading manifest, workers, frames, etc
 CSP_FONT_SRC = ("'self'", "*.googleapis.com", "*.gstatic.com")
-CSP_CONNECT_SRC = ("'self'", "*.googleapis.com")
-CSP_OBJECT_SRC = ("'self'", "*.googleapis.com")
+CSP_CONNECT_SRC = ("'self'", "*.googleapis.com", "unpkg.com")
+CSP_OBJECT_SRC = ("'self'", "*.googleapis.com", "unpkg.com")
 CSP_BASE_URI = ("'self'",)
 CSP_FRAME_ANCESTORS = ("'self'",)
 CSP_FORM_ACTION = ("'self'",)
