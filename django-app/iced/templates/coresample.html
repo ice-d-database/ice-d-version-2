@@ -6,6 +6,14 @@
 <div>
 <h3>This sample belongs to core <a href="/{{ app_name }}/core/{{ coresample.core.name }}/">{{ coresample.core.name }}</a></h3>
 </div>
+{% if coresample.USPRR_DB_id %}
+    <div>
+        <h3 class="content-header">U.S. Polar Rock Repository</h3>
+        <p>
+            This sample is housed at the U.S. Polar Rock Repository. <a href="http://research.bpcrc.osu.edu/rr/collection/object/{{ coresample.USPRR_DB_id }}" target="_blank">Link</a>
+        </p>
+    </div>
+{% endif %}
 <div>
     <h3 class="content-header">Associated documents</h3>
         {% include 'documents_table_template.html' %}
