@@ -611,6 +611,7 @@ class CoreSample(models.Model):
     lithology = models.TextField(null=True, blank=True)
     sediment_conc_wtwt = models.FloatField(null=True, blank=True)
     quartz_extracted_g = models.FloatField(null=True, blank=True)
+    USPRR_DB_id = models.TextField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
 
     def __str__(self):
