@@ -1062,6 +1062,12 @@ class C14Quartz(models.Model):
     std_N14c_atoms_g = models.FloatField(null=True, blank=True)
     std_delN14c_atoms_g = models.FloatField(null=True, blank=True)
     C_mass_ug = models.FloatField(null=True, blank=True)
+    N14_pct_25 = models.FloatField(null=True,blank=True)
+    N14_pct_16 = models.FloatField(null=True, blank=True)
+    N14_pct_50 = models.FloatField(null=True, blank=True)
+    N14_pct_84 = models.FloatField(null=True, blank=True)
+    N14_pct_975 = models.FloatField(null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.id} - ({self.sample})"
@@ -1401,6 +1407,7 @@ class Job(models.Model):
 class Be_stds(models.Model):
     std_name = models.CharField(max_length=255, null=True, blank=True)
     cf = models.FloatField(null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
     sample = models.ForeignKey(Sample, on_delete=CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -1413,6 +1420,7 @@ class Be_stds(models.Model):
 class Al_stds(models.Model):
     std_name = models.CharField(max_length=255, null=True, blank=True)
     cf = models.FloatField(null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
     sample = models.ForeignKey(Sample, on_delete=CASCADE, null=True, blank=True)
 
     def __str__(self):
