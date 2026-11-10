@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div>
+        <b>AMS standardizations<br><br></b>
+        <div class="ml-1">This page provides a list of standardizations to which Be-10 and Al-26
+            measurements submitted to the online exposure age and erosion rate calculators can be
+            referenced.  A 'standardization' is the combination of a particular isotope ratio
+            standard material and an assumed isotope ratio for that material. Each standardization
+            described below is associated with a name that appears in the first column.
+            This name is then entered in the appropriate place in the online calculator
+            input. Note that it has to be entered exactly as written here -- the calculator is
+            case-sensitive and doesn't have any code to try to figure out what you mean by a
+            standardization name that is almost correct. These names are also used in the ICE-D
+            data tables for Be-10 and Al-26 measurements. <br><br></div>
+
+        <div class="ml-1">Note that two pieces of information are critical here: the identity of the
+            physical standard material, and the nominal isotope ratio that the material is assumed
+            to have. In a number of cases, the same physical standard material has been used with
+            different assumed isotope ratios, in which case there are multiple different
+            names for all the different material/ratio associations.<br><br></div>
+
+        <div class="ml-1">The goal here is that users not have to renormalize their AMS
+            measurements before submitting them to the online calculators. For all the
+            standardizations listed below, there is a known conversion factor that can be used
+            to convert measurements made using that standardization to the single standardization
+            that is used internally in the
+            online calculators. The calculators will do that conversion internally before
+            calculating exposure ages or erosion rates.<br><br></div>
+
+        <div class="ml-1">Thus, you DO NOT renormalize data to a particular standardization
+            BEFORE submitting it to the calculator -- the idea is that you say what
+            standardization was used for a particular sample, and the correction is done internally
+            in a consistent fashion.<br><br></div>
+
+        <div class="ml-1">If you are really interested in this, there is more information <A href="https://cosmognosis.wordpress.com/2011/05/14/standard-109-ratios-vs-be-10-half-lives-again-part-i/">here</A> and <a href="https://cosmognosis.wordpress.com/2011/06/27/standard-109-ratios-vs-be-10-half-lives-again-part-ii-keep-it-simple/">here.</a><br><br></div>
+
+        <div class="ml-1">If you are using a standard material/isotope ratio pair that is not
+            listed here, and you would like it to be added,
+            please <a href="mailto:balcs@bgc.org">contact Greg Balco</a>.<br><br><br></div>
+
+    </div>
+    <div><hr><br></div>
+    <div><b>Be-10 standardizations<br><br></b></div>
+    <table>
+        <tr>
+            <th>Standardization name</th>
+            <th>Description</th>
+        </tr>
+        {% for std in be_stds_list %}
+        <tr>
+            <td>
+                <pre>{{ std.std_name }}</pre>
+            </td>
+            <td>
+                <p>
+                    <br>{{ std.comments|safe }}<br><br>
+                </p>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+        <div><br><hr><br></div>
+    <div><b>Al-26 standardizations<br><br></b></div>
+    <table>
+        <tr>
+            <th>Standardization name</th>
+            <th>Description</th>
+        </tr>
+        {% for std in al_stds_list %}
+        <tr>
+            <td>
+                <pre>{{ std.std_name }}</pre>
+            </td>
+            <td>
+                <p>
+                    <br>{{ std.comments|safe }}<br><br>
+                </p>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -34,6 +34,8 @@ from .models import (
     Cl36,
     MajorElement,
     TraceElement,
+    Be_stds,
+    Al_stds
 )
 
 logger = logging.getLogger(__name__)
@@ -1123,4 +1125,17 @@ def sample(request, application_name, sample_name):
     } | application.get_application_ctx()
 
     template = loader.get_template("sample.html")
+    return HttpResponse(template.render(context, request))
+
+def stds_list_page(request):
+    be_stds_list = Be_stds.objects.all()
+    al_stds_list = Al_stds.objects.all()
+
+    context = {
+        "be_stds_list": be_stds_list,
+        "al_stds_list": al_stds_list,
+        "header_img_path": "img/star_image.jpg",
+    }
+
+    template = loader.get_template("stds_list.html")
     return HttpResponse(template.render(context, request))

@@ -56,6 +56,7 @@ urlpatterns = [
     path("api/", include("api.urls")),
     # Template driven routes
     path("", views.home),
+    path("AMS-standardizations", views.stds_list_page),
     path("<application_name>/", views.landing),
     path("<application_name>/cores/", views.cores),
     path("<application_name>/core/<core_name>/", views.core),
