@@ -513,11 +513,15 @@ def depth_nuclide_concentration_query(core_id):
            delN10_atoms_g,
            Be10_Al26_quartz_id,
            N26_atoms_g,
-           delN26_atoms_g
+           delN26_atoms_g,
+           C14_quartz_id,
+           N14_atoms_g,
+           delN14_atoms_g
     from base_coresample ccs
     left join base_coresamplenuclidematch ccsnm on ccsnm.coresample_id = ccs.id
     left join _ne21_quartz n21q on ccsnm.Ne21_quartz_id = n21q.id
     left join _be10_al26_quartz b10a26 on ccsnm.Be10_Al26_quartz_id = b10a26.id
+    left join _c14_quartz c14 on ccsnm.C14_quartz_id = c14.id
     where ccs.core_id = {core_id}
 ), ne21_data as (
     select
@@ -558,6 +562,19 @@ def depth_nuclide_concentration_query(core_id):
     where N26_atoms_g > 0
     group by Be10_Al26_quartz_id
     order by top_depth_cm
+), c14_data as (
+    select
+        min(ccs.top_depth_cm) as top_depth_cm,
+        max(ccs.bot_depth_cm) as bot_depth_cm,
+        min(ccs.top_depth_gcm2) as top_depth_gcm2,
+        max(ccs.bot_depth_gcm2) as bot_depth_gcm2,
+        N14_atoms_g,
+        delN14_atoms_g,
+        count(C14_quartz_id) as count
+    from core_samples ccs
+    where N14_atoms_g > 0
+    group by C14_quartz_id
+    order by top_depth_cm
 ), ne21_json as (
     select JSON_ARRAYAGG(
     JSON_OBJECT(
@@ -594,9 +611,22 @@ def depth_nuclide_concentration_query(core_id):
         'count', count
     )) from al26_data
     order by top_depth_cm
+), c14_json as (
+    select JSON_ARRAYAGG(
+    JSON_OBJECT(
+        'top_depth_cm', top_depth_cm,
+        'bot_depth_cm', bot_depth_cm,
+        'top_depth_gcm2', top_depth_gcm2,
+        'bot_depth_gcm2', bot_depth_gcm2,
+        'n14_atoms_g', N14_atoms_g,
+        'deln14_atoms_g', delN14_atoms_g,
+        'count', count
+    )) from c14_data
+    order by top_depth_cm
 ) select JSON_OBJECT(
     'Be-10 (qtz)', (select * from be10_json),
     'Ne-21 (qtz)', (select * from ne21_json),
-    'Al-26 (qtz)', (select * from al26_json)
+    'Al-26 (qtz)', (select * from al26_json),
+    'C-14 (qtz)', (select * from c14_json)
 )
 """
